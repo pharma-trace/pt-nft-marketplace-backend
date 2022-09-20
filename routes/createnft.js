@@ -14,20 +14,15 @@ import {
   createCollection,
   getCollection,
   getAllCollection,
-} from "../controllers/createnft";
+} from "../controllers/nft";
 
 const router = express.Router();
-
 router.post("/create-nft", createNFT);
-
 router.get("/collection-name/:collectionName", collectionName);
-
 router.get("/user-nft/:_id", userNft);
 router.get("/users-nft", usersNft);
-
 router.get("/find-user", findUser);
 router.get("/search-user/:query", searchUser);
-
 router.put("/like-nft", likeNft);
 router.put("/unlike-nft", unlikeNft);
 router.get("/get-categories", getCategories);
