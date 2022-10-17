@@ -4,23 +4,25 @@ const { Schema } = mongoose;
 const { ObjectId } = mongoose.Schema;
 
 const collectionSchema = new Schema({
-  collectionId: {
+  id: {
     type: String,
-    required: true,
-    unique: true,
+    default: function genUUID() {
+      return uuid.v1();
+    },
   },
   address: {
     type: String,
     required: true,
+    unique: true,
   },
-  collectionName: {
+  name: {
     type: String,
     required: true,
   },
-  collectionDescription: {
+  description: {
     type: String,
   },
-  collectionImage: {
+  image: {
     type: String,
     required: true,
   },

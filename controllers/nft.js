@@ -13,12 +13,6 @@ export const createNFT = async (req, res) => {
     metadata,
     collectionId,
   } = req.body;
-  // console.log("req.body", req.body);
-  // if (!name.length && !description.length) {
-  //   return res.json({
-  //     error: "NFT Asset Name and Description Required",
-  //   });
-  // }
   try {
     var response = {};
 
@@ -45,6 +39,53 @@ export const createNFT = async (req, res) => {
   }
 };
 
+export const getTopThreeUserNFT = async (req, res) => {
+  try {
+    console.log(req.query.collectionId, req.query.wallet);
+    var nft = {};
+    const nftRes = await Nft.find(
+      {
+        collectionId: req.query.collectionId,
+        wallet: req.query.wallet,
+      },
+      {}
+    ).limit(3);
+    // .populate("createdBy", "name ipfs")
+    //     .sort({ createdAt: -1 })
+    //     .limit(10);
+    nft.status = 200;
+    nft.row = nftRes;
+    res.json(nft);
+  } catch (err) {
+    var nft = {};
+    nft.status = 400;
+    res.json(nft);
+    console.log(err);
+  }
+};
+export const getUserLazyNFT = async (req, res) => {
+  try {
+    var nft = {};
+    const nftRes = await Nft.find(
+      {
+        collectionId: req.query.collectionId,
+        wallet: req.query.wallet,
+      },
+      {}
+    );
+    // .populate("createdBy", "name ipfs")
+    //     .sort({ createdAt: -1 })
+    //     .limit(10);
+    nft.status = 200;
+    nft.row = nftRes;
+    res.json(nft);
+  } catch (err) {
+    var nft = {};
+    nft.status = 400;
+    res.json(nft);
+    console.log(err);
+  }
+};
 export const userNft = async (req, res) => {
   try {
     const nft = await Nft.findById(req.params._id);
@@ -152,7 +193,7 @@ export const getCategories = async (req, res) => {
     //     .limit(10);
     response.row = mongoRes;
     response.status = 200;
-    console.log("mongoRes", response);
+    // console.log("mongoRes", response);
 
     res.json(response);
   } catch (err) {
@@ -165,13 +206,16 @@ export const getCategories = async (req, res) => {
 
 export const getTokenCount = async (req, res) => {
   try {
+    var response = {};
+
     const tokenCountRes = await tokenCount.find();
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
-    tokenCountRes.status = 200;
-
-    res.json(tokenCountRes);
+    console.log("tokenCountRes  ", tokenCountRes);
+    response.status = 200;
+    response.tokenId = tokenCountRes[0].tokenId;
+    res.json(response);
   } catch (err) {
     console.log(err);
     var tokenCountRes;
@@ -197,7 +241,7 @@ export const updateTokenCount = async (req, res) => {
     );
     response.status = 200;
     response.tokenId = tokenCountRes.tokenId;
-    res.json(tokenCountRes);
+    res.json(response);
   } catch (err) {
     var tokenCountRes;
     tokenCountRes.status = 400;
@@ -208,8 +252,7 @@ export const updateTokenCount = async (req, res) => {
 };
 
 export const createCollection = async (req, res) => {
-  const { address, collectionDescription, collectionImage, collectionName } =
-    req.body;
+  const { address, name, description, image } = req.body;
   if (!address.length && !collectionName.length) {
     return res.json({
       status: 400,
@@ -221,11 +264,10 @@ export const createCollection = async (req, res) => {
     var response = {};
 
     const collection = new collections({
-      collectionId: address + "-" + collectionName,
       address,
-      collectionDescription,
-      collectionImage,
-      collectionName,
+      name,
+      description,
+      image,
     });
     collection.save();
     response.status = 200;
@@ -240,7 +282,7 @@ export const createCollection = async (req, res) => {
   }
 };
 
-export const getCollection = async (req, res) => {
+export const getCollectionByAddress = async (req, res) => {
   try {
     const collectionsRes = await collections.find(
       { address: req.query.address },
@@ -260,18 +302,40 @@ export const getCollection = async (req, res) => {
     console.log(err);
   }
 };
+export const getCollectionById = async (req, res) => {
+  var response = {};
+
+  try {
+    const collectionsRes = await collections.find({ _id: req.query.id }, {});
+    // .populate("createdBy", "name ipfs")
+    //     .sort({ createdAt: -1 })
+    //     .limit(10);
+    response.status = 200;
+    response.collections = collectionsRes[0];
+    res.json(response);
+  } catch (err) {
+    console.log(err, "getCollectionById");
+
+    response.status = 400;
+    res.json(response);
+
+    console.log(err);
+  }
+};
 
 export const getAllCollection = async (req, res) => {
   try {
+    var response = {};
+
     const collectionsRes = await collections.find();
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
-    collectionsRes.status = 200;
-
-    res.json(collectionsRes);
+    response.status = 200;
+    response.row = collectionsRes;
+    res.json(response);
   } catch (err) {
-    var collectionsRes;
+    var collectionsRes = {};
     collectionsRes.status = 400;
     res.json(collectionsRes);
 

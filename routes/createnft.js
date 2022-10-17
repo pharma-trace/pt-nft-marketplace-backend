@@ -12,8 +12,11 @@ import {
   updateTokenCount,
   getTokenCount,
   createCollection,
-  getCollection,
+  getCollectionByAddress,
+  getCollectionById,
   getAllCollection,
+  getUserLazyNFT,
+  getTopThreeUserNFT,
 } from "../controllers/nft";
 
 const router = express.Router();
@@ -29,7 +32,10 @@ router.get("/get-categories", getCategories);
 router.get("/get-tokenid", getTokenCount);
 router.put("/update-tokenid", updateTokenCount);
 router.post("/create-collection", createCollection);
-router.get("/get-collection", getCollection);
+router.get("/get-collection-by-id", getCollectionById);
+router.get("/get-collection-by-address", getCollectionByAddress);
 router.get("/get-all-collection", getAllCollection);
+router.get("/get-user-lazy-nft", getUserLazyNFT);
+router.get("/get-top-three-lazy-nft", getTopThreeUserNFT);
 
 module.exports = router;
