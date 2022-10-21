@@ -38,10 +38,80 @@ export const createNFT = async (req, res) => {
     // return res.status(400).send("Error Found");
   }
 };
-
-export const getTopThreeUserNFT = async (req, res) => {
+export const listedNFT = async (req, res) => {
   try {
-    console.log(req.query.collectionId, req.query.wallet);
+    // const tokenCountRes = await tokenCount.findAndModify(
+    //   { name: "pharmatraceToken" },
+    //   { $inc: { tokenId: 1 } }
+    // );
+    var response = {};
+
+    const updatedNFT = await Nft.updateOne(
+      {
+        collectionId: req.body.collectionId,
+        wallet: req.body.wallet,
+        tokenId: req.body.tokenId,
+      },
+      {
+        $set: {
+          isListed: true,
+          signature: req.body.signature,
+          price: req.body.price,
+          currency: req.body.currency,
+        },
+      }
+    );
+    console.log("updatedNFT", updatedNFT);
+    response.status = 200;
+    response.data = updatedNFT;
+    res.json(response);
+  } catch (err) {
+    var response = {};
+    response.status = 400;
+    res.json(response);
+
+    console.log(err);
+  }
+};
+
+export const unListedNFT = async (req, res) => {
+  try {
+    // const tokenCountRes = await tokenCount.findAndModify(
+    //   { name: "pharmatraceToken" },
+    //   { $inc: { tokenId: 1 } }
+    // );
+    var response = {};
+    console.log("req.body", req.body);
+
+    const updatedNFT = await Nft.updateOne(
+      {
+        collectionId: req.body.collectionId,
+        wallet: req.body.wallet,
+        tokenId: req.body.tokenId,
+      },
+      {
+        $set: {
+          isListed: false,
+          signature: req.body.signature,
+          price: req.body.price,
+          currency: req.body.currency,
+        },
+      }
+    );
+    console.log("updatedNFT", updatedNFT);
+    response.status = 200;
+    response.data = updatedNFT;
+    res.json(response);
+  } catch (err) {
+    var response = {};
+    response.status = 400;
+    res.json(response);
+
+    console.log(err);
+  }
+};
+export const getCollectionNFTWithLimit = async (req, res) => {
+  try {
     var nft = {};
     const nftRes = await Nft.find(
       {
@@ -49,7 +119,8 @@ export const getTopThreeUserNFT = async (req, res) => {
         wallet: req.query.wallet,
       },
       {}
-    ).limit(3);
+    ).limit(req.query.limit);
+    console.log("getCollectionNFTWithLimit", req.query);
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
@@ -78,6 +149,30 @@ export const getUserLazyNFT = async (req, res) => {
     //     .limit(10);
     nft.status = 200;
     nft.row = nftRes;
+    res.json(nft);
+  } catch (err) {
+    var nft = {};
+    nft.status = 400;
+    res.json(nft);
+    console.log(err);
+  }
+};
+export const getNFTDetails = async (req, res) => {
+  try {
+    var nft = {};
+    const nftRes = await Nft.find(
+      {
+        collectionId: req.query.collectionId,
+        tokenId: req.query.tokenId,
+        wallet: req.query.wallet,
+      },
+      {}
+    );
+    // .populate("createdBy", "name ipfs")
+    //     .sort({ createdAt: -1 })
+    //     .limit(10);
+    nft.status = 200;
+    nft.nftDetails = nftRes[0];
     res.json(nft);
   } catch (err) {
     var nft = {};
@@ -252,14 +347,20 @@ export const updateTokenCount = async (req, res) => {
 };
 
 export const createCollection = async (req, res) => {
-  const { address, name, description, image } = req.body;
-  if (!address.length && !collectionName.length) {
-    return res.json({
-      status: 400,
-
-      error: "collection Asset Name and Description Required",
-    });
-  }
+  const {
+    address,
+    name,
+    description,
+    image,
+    banner,
+    customURL,
+    websiteURL,
+    facebookURL,
+    twitterURL,
+    instagramURL,
+    tiktokURL,
+    youtubeURL,
+  } = req.body;
   try {
     var response = {};
 
@@ -268,6 +369,14 @@ export const createCollection = async (req, res) => {
       name,
       description,
       image,
+      banner,
+      customURL,
+      websiteURL,
+      facebookURL,
+      twitterURL,
+      instagramURL,
+      tiktokURL,
+      youtubeURL,
     });
     collection.save();
     response.status = 200;
@@ -283,6 +392,8 @@ export const createCollection = async (req, res) => {
 };
 
 export const getCollectionByAddress = async (req, res) => {
+  var response = {};
+
   try {
     const collectionsRes = await collections.find(
       { address: req.query.address },
@@ -291,15 +402,12 @@ export const getCollectionByAddress = async (req, res) => {
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
-    collectionsRes.status = 200;
-
-    res.json(collectionsRes);
+    response.status = 200;
+    response.collections = collectionsRes[0];
+    res.json(response);
   } catch (err) {
-    var collectionsRes;
-    collectionsRes.status = 400;
-    res.json(collectionsRes);
-
-    console.log(err);
+    response.status = 400;
+    res.json(response);
   }
 };
 export const getCollectionById = async (req, res) => {
@@ -314,12 +422,8 @@ export const getCollectionById = async (req, res) => {
     response.collections = collectionsRes[0];
     res.json(response);
   } catch (err) {
-    console.log(err, "getCollectionById");
-
     response.status = 400;
     res.json(response);
-
-    console.log(err);
   }
 };
 
@@ -331,6 +435,7 @@ export const getAllCollection = async (req, res) => {
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
+    // console.log("getAllCollection ==> ", collectionsRes);
     response.status = 200;
     response.row = collectionsRes;
     res.json(response);

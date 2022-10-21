@@ -27,6 +27,22 @@ const nftSchema = new Schema(
     wallet: {
       type: String,
     },
+    isListed: {
+      type: Boolean,
+      default: false,
+    },
+    signature: {
+      type: String,
+      default: "",
+    },
+    currency: {
+      type: String,
+      default: "",
+    },
+    price: {
+      type: String,
+      default: "",
+    },
     likes: [{ type: ObjectId, reg: "Profile" }],
   },
   { timestamps: true }

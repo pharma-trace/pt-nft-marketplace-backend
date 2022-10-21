@@ -59,7 +59,7 @@ export const findUser = async (req, res) => {
     //     .sort({ createdAt: -1 })
     //     .limit(10);
     response.status = 200;
-    response.data = profileRes;
+    response.row = profileRes;
     response.message = "";
     res.json(response);
   } catch (err) {
