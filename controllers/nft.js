@@ -58,6 +58,8 @@ export const listedNFT = async (req, res) => {
           signature: req.body.signature,
           price: req.body.price,
           currency: req.body.currency,
+          isFixedPrice: req.body.isFixedPrice,
+          autionDate: req.body.autionDate,
         },
       }
     );
@@ -95,6 +97,8 @@ export const unListedNFT = async (req, res) => {
           signature: req.body.signature,
           price: req.body.price,
           currency: req.body.currency,
+          isFixedPrice: req.body.isFixedPrice,
+          autionDate: req.body.autionDate,
         },
       }
     );
@@ -117,6 +121,31 @@ export const getCollectionNFTWithLimit = async (req, res) => {
       {
         collectionId: req.query.collectionId,
         wallet: req.query.wallet,
+      },
+      {}
+    ).limit(req.query.limit);
+    console.log("getCollectionNFTWithLimit", req.query);
+    // .populate("createdBy", "name ipfs")
+    //     .sort({ createdAt: -1 })
+    //     .limit(10);
+    nft.status = 200;
+    nft.row = nftRes;
+    res.json(nft);
+  } catch (err) {
+    var nft = {};
+    nft.status = 400;
+    res.json(nft);
+    console.log(err);
+  }
+};
+export const getListedNFTWithLimit = async (req, res) => {
+  try {
+    var nft = {};
+    const nftRes = await Nft.find(
+      {
+        collectionId: req.query.collectionId,
+        wallet: { $ne: req.query.wallet },
+        isListed: true,
       },
       {}
     ).limit(req.query.limit);

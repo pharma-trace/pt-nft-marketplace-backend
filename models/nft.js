@@ -31,6 +31,10 @@ const nftSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isFixedPrice: {
+      type: Boolean,
+      default: false,
+    },
     signature: {
       type: String,
       default: "",
@@ -40,6 +44,10 @@ const nftSchema = new Schema(
       default: "",
     },
     price: {
+      type: String,
+      default: "",
+    },
+    autionDate: {
       type: String,
       default: "",
     },

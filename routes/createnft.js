@@ -20,6 +20,7 @@ import {
   getUserLazyNFT,
   getCollectionNFTWithLimit,
   getNFTDetails,
+  getListedNFTWithLimit,
 } from "../controllers/nft";
 
 const router = express.Router();
@@ -42,5 +43,6 @@ router.get("/get-collection-by-address", getCollectionByAddress);
 router.get("/get-all-collection", getAllCollection);
 router.get("/get-user-lazy-nft", getUserLazyNFT);
 router.get("/get-collection-nft-with-limit", getCollectionNFTWithLimit);
+router.get("/get-listed-nft-with-limit", getListedNFTWithLimit);
 
 module.exports = router;
