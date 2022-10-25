@@ -24,6 +24,6 @@ We have different API to connect different collection on mongoDB.
 13. "/get-collection" = get collection information
 14. "/get-all-collection" =  get all collection
 15. "/user-profile" = this is user to create user account in mongdb
-
+16. "/get-update-profile" = this will be used to update user data
 
 ```
