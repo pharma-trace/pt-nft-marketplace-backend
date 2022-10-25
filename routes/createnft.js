@@ -21,6 +21,7 @@ import {
   getCollectionNFTWithLimit,
   getNFTDetails,
   getListedNFTWithLimit,
+  getListedNFTWithCollection,
 } from "../controllers/nft";
 
 const router = express.Router();
@@ -44,5 +45,6 @@ router.get("/get-all-collection", getAllCollection);
 router.get("/get-user-lazy-nft", getUserLazyNFT);
 router.get("/get-collection-nft-with-limit", getCollectionNFTWithLimit);
 router.get("/get-listed-nft-with-limit", getListedNFTWithLimit);
+router.get("/get-listed-nft-with-collection", getListedNFTWithCollection);
 
 module.exports = router;

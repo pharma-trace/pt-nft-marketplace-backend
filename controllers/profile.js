@@ -2,7 +2,22 @@ import Profile from "../models/profile";
 
 export const profile = async (req, res) => {
   var response = {};
-  const { name, email, about, isColour, image, banner, wallet } = req.body;
+  const {
+    name,
+    email,
+    about,
+    isColour,
+    image,
+    banner,
+    customURL,
+    websiteURL,
+    facebookURL,
+    twitterURL,
+    instagramURL,
+    tiktokURL,
+    youtubeURL,
+    wallet,
+  } = req.body;
   //   if (!name.length && !email.length) {
   //     return res.json({
   //       error: "Name, Email and Wallet Address Required",
@@ -16,6 +31,13 @@ export const profile = async (req, res) => {
       isColour,
       image,
       banner,
+      customURL,
+      websiteURL,
+      facebookURL,
+      twitterURL,
+      instagramURL,
+      tiktokURL,
+      youtubeURL,
       wallet,
     });
     profile.save();
@@ -33,21 +55,61 @@ export const profile = async (req, res) => {
     return res.json(response);
   }
 };
+export const updateProfile = async (req, res) => {
+  var response = {};
+  const {
+    name,
+    email,
+    about,
+    isColour,
+    image,
+    banner,
+    customURL,
+    websiteURL,
+    facebookURL,
+    twitterURL,
+    instagramURL,
+    tiktokURL,
+    youtubeURL,
+    wallet,
+  } = req.body;
+  try {
+    // const tokenCountRes = await tokenCount.findAndModify(
+    //   { name: "pharmatraceToken" },
+    //   { $inc: { tokenId: 1 } }
+    // );
+    var response = {};
 
-// export const findUser = async (req, res) => {
-//   try {
-//     const profile = await Profile.findById(req.auth._id);
-//     //usefollowing list
-//     let following = profile.following;
-//     following.push(profile._id);
-//     const people = await Profile.find({ _id: { $nin: following } })
-//       .select("name wallet")
-//       .limit(10);
-//     res.json(people);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+    const tokenCountRes = await tokenCount.findByIdAndUpdate(
+      { wallet: req.body.wallet },
+      {
+        name: name,
+        email: email,
+        about: about,
+        isColour: isColour,
+        image: image,
+        banner: banner,
+        customURL: customURL,
+        websiteURL: websiteURL,
+        facebookURL: facebookURL,
+        twitterURL: twitterURL,
+        instagramURL: instagramURL,
+        tiktokURL: tiktokURL,
+        youtubeURL: youtubeURL,
+      },
+      { new: true }
+    );
+    response.status = 200;
+    response.tokenId = tokenCountRes.tokenId;
+    res.json(response);
+  } catch (err) {
+    var tokenCountRes;
+    tokenCountRes.status = 400;
+    res.json(tokenCountRes);
+
+    console.log(err);
+  }
+};
 
 export const findUser = async (req, res) => {
   var response = {};

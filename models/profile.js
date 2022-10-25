@@ -16,12 +16,37 @@ const profileSchema = new Schema(
       // unique: true,
     },
     about: {},
+    image: {
+      type: String,
+    },
+    banner: {
+      type: String,
+    },
+    customURL: {
+      type: String,
+    },
+    websiteURL: {
+      type: String,
+    },
+    facebookURL: {
+      type: String,
+    },
+    twitterURL: {
+      type: String,
+    },
+    instagramURL: {
+      type: String,
+    },
+    tiktokURL: {
+      type: String,
+    },
+    youtubeURL: {
+      type: String,
+    },
     isColour: {
       type: Boolean,
       required: true,
     },
-    image: String,
-    banner: String,
     following: [{ type: Schema.ObjectId, ref: "User" }],
     followers: [{ type: Schema.ObjectId, ref: "User" }],
     wallet: {
