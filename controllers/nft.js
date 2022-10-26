@@ -75,6 +75,45 @@ export const listedNFT = async (req, res) => {
     console.log(err);
   }
 };
+export const changeStatusNFT = async (req, res) => {
+  try {
+    // const tokenCountRes = await tokenCount.findAndModify(
+    //   { name: "pharmatraceToken" },
+    //   { $inc: { tokenId: 1 } }
+    // );
+    var response = {};
+
+    const updatedNFT = await Nft.updateOne(
+      {
+        collectionId: req.body.collectionId,
+        wallet: req.body.wallet,
+        tokenId: req.body.tokenId,
+      },
+      {
+        $set: {
+          isSold: true,
+          wallet: req.body.buyer,
+          isListed: false,
+          signature: req.body.signature,
+          price: req.body.price,
+          currency: req.body.currency,
+          isFixedPrice: req.body.isFixedPrice,
+          autionDate: req.body.autionDate,
+        },
+      }
+    );
+    console.log("updatedNFT", updatedNFT);
+    response.status = 200;
+    response.data = updatedNFT;
+    res.json(response);
+  } catch (err) {
+    var response = {};
+    response.status = 400;
+    res.json(response);
+
+    console.log(err);
+  }
+};
 
 export const unListedNFT = async (req, res) => {
   try {

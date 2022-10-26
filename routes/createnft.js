@@ -22,12 +22,15 @@ import {
   getNFTDetails,
   getListedNFTWithLimit,
   getListedNFTWithCollection,
+  changeStatusNFT,
 } from "../controllers/nft";
 
 const router = express.Router();
 router.post("/create-nft", createNFT);
 router.post("/listing-nft", listedNFT);
 router.post("/unlisting-nft", unListedNFT);
+router.post("/change-status-nft", changeStatusNFT);
+
 router.get("/collection-name/:collectionName", collectionName);
 router.get("/user-nft/:_id", userNft);
 router.get("/get-nft-details", getNFTDetails);

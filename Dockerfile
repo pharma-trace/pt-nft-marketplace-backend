@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:12.2022.10.24.14
+FROM node:16.14.2-alpine
 ENV NODE_ENV=production
 
 WORKDIR /app
@@ -11,3 +11,5 @@ COPY . .
 COPY .env.server .env
 EXPOSE 8000
 CMD [ "node", "index.js" ]
+
+

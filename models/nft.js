@@ -47,6 +47,10 @@ const nftSchema = new Schema(
       type: String,
       default: "",
     },
+    isSold: {
+      type: Boolean,
+      default: false,
+    },
     autionDate: {
       type: String,
       default: "",
