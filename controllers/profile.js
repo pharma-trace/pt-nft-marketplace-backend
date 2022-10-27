@@ -80,7 +80,7 @@ export const updateProfile = async (req, res) => {
     // );
     var response = {};
 
-    const tokenCountRes = await tokenCount.findByIdAndUpdate(
+    const profileUpdateRes = await Profile.findByIdAndUpdate(
       { wallet: req.body.wallet },
       {
         name: name,
@@ -100,11 +100,11 @@ export const updateProfile = async (req, res) => {
       { new: true }
     );
     response.status = 200;
-    response.tokenId = tokenCountRes.tokenId;
+    response.data = profileUpdateRes.tokenId;
     res.json(response);
   } catch (err) {
-    var tokenCountRes;
-    tokenCountRes.status = 400;
+    var response = {};
+    response.status = 400;
     res.json(tokenCountRes);
 
     console.log(err);
