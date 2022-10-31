@@ -149,3 +149,51 @@ export const searchUser = async (req, res) => {
     console.log(err);
   }
 };
+
+export const createUpdateProfile = async (req, res) => {
+  var response = {};
+  try {
+    const data = await parseMultipartForm(req);
+    try {
+      var profileObj = await Profile.find({ wallet: req.query.address }, {});
+      const inputs = {
+        name: data.name,
+        email: data.email,
+        about: data.about,
+        isColour: data.isColour,
+        image: data.image,
+        banner: data.banner,
+        customURL: data.customURL,
+        websiteURL: data.websiteURL,
+        facebookURL: data.facebookURL,
+        twitterURL: data.twitterURL,
+        instagramURL: data.instagramURL,
+        tiktokURL: data.tiktokURL,
+        youtubeURL: data.youtubeURL,
+        wallet: data.wallet,
+      };
+      if (!profileObj) {
+        const profile = new Profile(inputs);
+        profile.save();
+        response.data = profile;
+        response.message = "created successfully";
+      } else {
+        const profile = await Profile.findOneAndUpdate(
+          { wallet: inputs.wallet },
+          {
+            ...inputs,
+          },
+          { new: true }
+        );
+        response.data = profile;
+        response.message = "update successfully";
+      }
+      response.status = 200;
+      res.json(response);
+    } catch (err) {
+      return res.status(400).send(err.message);
+    }
+  } catch (error) {
+    return res.status(500).send({ error });
+  }
+};
