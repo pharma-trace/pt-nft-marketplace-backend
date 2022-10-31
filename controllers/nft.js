@@ -233,7 +233,7 @@ export const getUserLazyNFT = async (req, res) => {
     const nftRes = await Nft.find(
       {
         collectionId: req.query.collectionId,
-        wallet: req.query.wallet,
+        wallet: { $regex: new RegExp("^" + req.query.wallet, "i") },
       },
       {}
     );
