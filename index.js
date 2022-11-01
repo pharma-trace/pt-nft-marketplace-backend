@@ -10,19 +10,20 @@ require("dotenv").config();
 const app = express();
 
 mongoose
-    .connect(process.env.DB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log("PharmaTrace Database Connected"))
-    .catch((err) => console.log(err));
+  .connect(process.env.DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("PharmaTrace Database Connected"))
+  .catch((err) => console.log(err));
+app.use(express.static("public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-    cors({
-        origin: "http://localhost:3000",
-    })
+  cors({
+    origin: "http://localhost:3000",
+  })
 );
 
 readdirSync("./routes").map((r) => app.use("/api", require(`./routes/${r}`)));
@@ -30,5 +31,5 @@ readdirSync("./routes").map((r) => app.use("/api", require(`./routes/${r}`)));
 const port = process.env.PORT || 8000;
 
 app.listen(port, () =>
-    console.log(`PharmaTrace Server Connected at Port ${port}`)
+  console.log(`PharmaTrace Server Connected at Port ${port}`)
 );
