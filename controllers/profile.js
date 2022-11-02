@@ -151,7 +151,7 @@ export const searchUser = async (req, res) => {
   }
 };
 
-function parseMultipartForm(req) {
+async function parseMultipartForm(req) {
   return new Promise((resolve, reject) => {
     let form = new multiparty.Form({ uploadDir: process.env.IMAGE_UPLOAD_URL });
     form.parse(req, function (err, fields, files) {
@@ -171,12 +171,13 @@ function parseMultipartForm(req) {
     });
   });
 }
+
 export const createUpdateProfile = async (req, res) => {
   var response = {};
   try {
     const data = await parseMultipartForm(req);
     try {
-      var profileObj = await Profile.find({ wallet: req.query.address }, {});
+      var profileObj = await Profile.find({ wallet: data.wallet }, {});
       const inputs = {
         name: data.name,
         email: data.email,
@@ -201,6 +202,7 @@ export const createUpdateProfile = async (req, res) => {
         response.data = profile;
         response.message = "created successfully";
       } else {
+        console.log(inputs, "inputs");
         const profile = await Profile.findOneAndUpdate(
           { wallet: inputs.wallet },
           {
@@ -208,6 +210,7 @@ export const createUpdateProfile = async (req, res) => {
           },
           { new: true }
         );
+        console.log(profile, "profile");
         response.data = profile;
         response.message = "update successfully";
       }
