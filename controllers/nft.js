@@ -202,7 +202,7 @@ export const getListedNFTWithCollection = async (req, res) => {
     const nftRes = await Nft.find(
       {
         collectionId: req.query.collectionId,
-        wallet: { $regex: new RegExp("^" + req.query.wallet, "i") },
+        wallet: { $ne: req.query.wallet },
         isListed: true,
       },
       {}
