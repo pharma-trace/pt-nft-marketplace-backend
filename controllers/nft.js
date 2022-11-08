@@ -38,6 +38,48 @@ export const createNFT = async (req, res) => {
     // return res.status(400).send("Error Found");
   }
 };
+export const auctionNFT = async (req, res) => {
+  const {
+    tokenId,
+    name,
+    description,
+    category,
+    supply,
+    wallet,
+    currency,
+    price,
+    metadata,
+    autionDate,
+    collectionId,
+  } = req.body;
+  try {
+    var response = {};
+
+    const nft = new Nft({
+      tokenId,
+      name,
+      description,
+      category,
+      supply,
+      currency,
+      wallet,
+      autionDate,
+      metadata,
+      price,
+      collectionId,
+    });
+    nft.save();
+
+    res.json(nft);
+  } catch (err) {
+    console.log(err);
+    response.status = 400;
+    response.err = err;
+    res.json(response);
+
+    // return res.status(400).send("Error Found");
+  }
+};
 export const listedNFT = async (req, res) => {
   try {
     // const tokenCountRes = await tokenCount.findAndModify(
