@@ -14,3 +14,26 @@ exports.originalOrigin = function(req, options) {
         protocol = tls ? "https" : "http";
     return protocol + "://" + host;
 };
+
+exports.regexOrSearch = function(columns,search) {
+    return {
+        $or:columns.map(column=> {
+            var obj={}
+            obj[column]={ $regex: '.*' + search + '.*'}
+            return obj 
+        })
+    }
+};
+
+exports.jsonResponse = function(res,status,data) {
+    var response={}
+    response.data = data;
+    response.status = status;
+    return res.json(response)
+}
+
+
+// { '$or': [
+//     {"wallet":{ $regex: '.*' + search + '.*'}}
+//     ]
+// }

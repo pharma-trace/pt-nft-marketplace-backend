@@ -25,7 +25,8 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
-
+app.use(express.static('public'));
+    
 readdirSync("./routes").map((r) => app.use("/api", require(`./routes/${r}`)));
 
 const port = process.env.PORT || 8000;
