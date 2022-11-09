@@ -19,6 +19,9 @@ const profileSchema = new Schema(
     image: {
       type: String,
     },
+    colorCode: {
+      type: String,
+    },
     banner: {
       type: String,
     },
