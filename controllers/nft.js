@@ -82,25 +82,11 @@ export const changeStatusNFT = async (req, res) => {
     // );
     var response = {};
 
-    const updatedNFT = await Nft.updateOne(
-      {
-        collectionId: req.body.collectionId,
-        wallet: req.body.wallet,
-        tokenId: req.body.tokenId,
-      },
-      {
-        $set: {
-          isSold: true,
-          wallet: req.body.buyer,
-          isListed: false,
-          signature: req.body.signature,
-          price: req.body.price,
-          currency: req.body.currency,
-          isFixedPrice: req.body.isFixedPrice,
-          autionDate: req.body.autionDate,
-        },
-      }
-    );
+    const updatedNFT = await Nft.deleteOne({
+      collectionId: req.body.collectionId,
+      wallet: req.body.wallet,
+      tokenId: req.body.tokenId,
+    });
     response.status = 200;
     response.data = updatedNFT;
     res.json(response);
