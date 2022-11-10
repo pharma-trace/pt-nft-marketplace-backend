@@ -1,4 +1,4 @@
-FROM node:16.14.2-alpine
+FROM public.ecr.aws/lambda/nodejs:12.2022.10.24.14
 ENV NODE_ENV=production
 
 WORKDIR /app
