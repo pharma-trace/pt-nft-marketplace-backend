@@ -8,7 +8,6 @@ COPY . .
 RUN rm  -rf ./node_modules
 RUN rm  -rf  ./mongo-compose
 RUN npm install --save
-RUN npx npm-force-resolutions 
 COPY .env.server .env
 EXPOSE 8000
 CMD [ "node", "index.js" ]
