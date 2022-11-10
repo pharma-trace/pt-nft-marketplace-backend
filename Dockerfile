@@ -7,7 +7,9 @@ COPY ["package.json", "package-lock.json*", "./"]
 COPY . .
 RUN rm  -rf ./node_modules
 RUN rm  -rf  ./mongo-compose
+RUN rm package-lock.json
 RUN npm install --save
+RUN npm audit
 RUN npx npm-force-resolutions 
 COPY .env.server .env
 EXPOSE 8000
