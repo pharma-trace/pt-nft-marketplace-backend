@@ -4,10 +4,11 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
-
+COPY . .
+RUN rm ./node_modules
+RUN rm ./mongo-compose
 RUN npm install --production
 
-COPY . .
 COPY .env.server .env
 EXPOSE 8000
 CMD [ "node", "index.js" ]
