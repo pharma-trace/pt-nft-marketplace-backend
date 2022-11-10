@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-var uuid = require("node-uuid");
+const { v4: uuidv4 } = require("uuid");
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Schema;
@@ -8,7 +8,7 @@ const collectionSchema = new Schema({
   id: {
     type: String,
     default: function genUUID() {
-      return uuid.v1();
+      return uuidv4();
     },
   },
   address: {
