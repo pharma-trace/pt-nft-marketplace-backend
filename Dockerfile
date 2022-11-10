@@ -5,8 +5,7 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 COPY . .
-RUN rm ./node_modules
-RUN rm ./mongo-compose
+RUN ls
 RUN npm install --production
 
 COPY .env.server .env
