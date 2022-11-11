@@ -14,6 +14,6 @@ RUN npm audit fix
 RUN npx npm-force-resolutions 
 COPY .env.server .env
 EXPOSE 8000
-CMD ["npm", "run". "deploy"]
+CMD ["npm", "run","deploy"]
 
 
