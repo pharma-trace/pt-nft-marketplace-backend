@@ -11,7 +11,7 @@ RUN rm package-lock.json
 RUN npm install --save
 RUN npm install --no-audit
 RUN npm audit fix
+COPY .env.server .env
 EXPOSE 8000
-CMD [ "node -r esm", "index.js" ]
 
 
