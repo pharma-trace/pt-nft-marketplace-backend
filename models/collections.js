@@ -1,16 +1,9 @@
 import mongoose from "mongoose";
-const { v4: uuidv4 } = require("uuid");
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Schema;
 
 const collectionSchema = new Schema({
-  id: {
-    type: String,
-    default: function genUUID() {
-      return uuidv4();
-    },
-  },
   address: {
     type: String,
     required: true,
