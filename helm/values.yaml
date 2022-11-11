@@ -1,0 +1,21 @@
+name: nft-marketplace
+port: 8000
+address:
+  enabled: true
+  url: "nft-marketplace"
+image:
+  repository: 035764999992.dkr.ecr.eu-central-1.amazonaws.com/nft-marketplace
+  tag: 
+  pullPolicy: IfNotPresent
+namespace: nft-marketplace
+deployment:
+  replicas: 1
+resources:
+  limits:
+    cpu: 150m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+serviceAccount:
+  name: nft-marketplace
