@@ -27,6 +27,3 @@ We have different API to connect different collection on mongoDB.
 16. "/get-update-profile" = this will be used to update user data
 
 ```
-
-this is used to when we going to deploy on cloud
-npm run deploy
