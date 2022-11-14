@@ -7,11 +7,11 @@ node_modules
 
 # testing
 /coverage
-./mongo-compose/data/*
+/mongo-compose/data/*
 # next.js
 /.next/
 /out/
-
+/public/image
 # production
 /build
 

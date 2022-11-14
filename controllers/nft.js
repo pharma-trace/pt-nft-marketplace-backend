@@ -105,7 +105,6 @@ export const listedNFT = async (req, res) => {
         },
       }
     );
-    console.log("updatedNFT", updatedNFT);
     response.status = 200;
     response.data = updatedNFT;
     res.json(response);
@@ -125,26 +124,11 @@ export const changeStatusNFT = async (req, res) => {
     // );
     var response = {};
 
-    const updatedNFT = await Nft.updateOne(
-      {
-        collectionId: req.body.collectionId,
-        wallet: req.body.wallet,
-        tokenId: req.body.tokenId,
-      },
-      {
-        $set: {
-          isSold: true,
-          wallet: req.body.buyer,
-          isListed: false,
-          signature: req.body.signature,
-          price: req.body.price,
-          currency: req.body.currency,
-          isFixedPrice: req.body.isFixedPrice,
-          autionDate: req.body.autionDate,
-        },
-      }
-    );
-    console.log("updatedNFT", updatedNFT);
+    const updatedNFT = await Nft.deleteOne({
+      collectionId: req.body.collectionId,
+      wallet: req.body.wallet,
+      tokenId: req.body.tokenId,
+    });
     response.status = 200;
     response.data = updatedNFT;
     res.json(response);
@@ -164,7 +148,6 @@ export const unListedNFT = async (req, res) => {
     //   { $inc: { tokenId: 1 } }
     // );
     var response = {};
-    console.log("req.body", req.body);
 
     const updatedNFT = await Nft.updateOne(
       {
@@ -183,7 +166,6 @@ export const unListedNFT = async (req, res) => {
         },
       }
     );
-    console.log("updatedNFT", updatedNFT);
     response.status = 200;
     response.data = updatedNFT;
     res.json(response);
@@ -205,7 +187,6 @@ export const getCollectionNFTWithLimit = async (req, res) => {
       },
       {}
     ).limit(req.query.limit);
-    console.log("getCollectionNFTWithLimit", req.query);
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
@@ -230,7 +211,6 @@ export const getListedNFTWithLimit = async (req, res) => {
       },
       {}
     ).limit(req.query.limit);
-    console.log("getCollectionNFTWithLimit", req.query);
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
@@ -255,7 +235,6 @@ export const getListedNFTWithCollection = async (req, res) => {
       },
       {}
     );
-    console.log("getCollectionNFTWithLimit", req.query);
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
@@ -422,7 +401,6 @@ export const getCategories = async (req, res) => {
     //     .limit(10);
     response.row = mongoRes;
     response.status = 200;
-    // console.log("mongoRes", response);
 
     res.json(response);
   } catch (err) {
@@ -441,7 +419,6 @@ export const getTokenCount = async (req, res) => {
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
-    console.log("tokenCountRes  ", tokenCountRes);
     response.status = 200;
     response.tokenId = tokenCountRes[0].tokenId;
     res.json(response);
@@ -569,7 +546,6 @@ export const getAllCollection = async (req, res) => {
     // .populate("createdBy", "name ipfs")
     //     .sort({ createdAt: -1 })
     //     .limit(10);
-    // console.log("getAllCollection ==> ", collectionsRes);
     response.status = 200;
     response.row = collectionsRes;
     res.json(response);

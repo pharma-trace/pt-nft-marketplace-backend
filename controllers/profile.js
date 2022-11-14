@@ -1,5 +1,5 @@
 import Profile from "../models/profile";
-var multiparty = require('multiparty');
+var multiparty = require("multiparty");
 
 export const profile = async (req, res) => {
   var response = {};
@@ -155,25 +155,25 @@ export const searchUser = async (req, res) => {
   }
 };
 
-async function parseMultipartForm(req){
-  return new Promise((resolve,reject)=>{
-    let form = new multiparty.Form({uploadDir:process.env.IMAGE_UPLOAD_URL})
-    form.parse(req,function(err,fields,files){
-      if(err) return reject(err) 
-      var data={}
-      const keys= Object.keys(fields)
-      keys.forEach(k=>{
-        data[k]=fields[k][0]
-      })
-      if(files.image){
-        const imagePath = files.image[0].path
-        const imageFileName= imagePath.slice(imagePath.lastIndexOf('/'))
+async function parseMultipartForm(req) {
+  return new Promise((resolve, reject) => {
+    let form = new multiparty.Form({ uploadDir: process.env.IMAGE_UPLOAD_URL });
+    form.parse(req, function (err, fields, files) {
+      if (err) return reject(err);
+      var data = {};
+      const keys = Object.keys(fields);
+      keys.forEach((k) => {
+        data[k] = fields[k][0];
+      });
+      if (files.image) {
+        const imagePath = files.image[0].path;
+        const imageFileName = imagePath.slice(imagePath.lastIndexOf("/"));
         const imageURL = process.env.IMAGE_URL + imageFileName;
-        data['image'] = imageURL;
+        data["image"] = imageURL;
       }
-      resolve(data)
-    })
-  })
+      resolve(data);
+    });
+  });
 }
 
 export const createUpdateProfile = async (req, res) => {
@@ -198,15 +198,15 @@ export const createUpdateProfile = async (req, res) => {
         youtubeURL: data.youtubeURL,
         wallet: data.wallet,
       };
-      console.log(profileObj,'profileObj')
-      console.log(profileObj.length,'profileObj.length')
-      if (!profileObj||profileObj.length==0) {
+      console.log(profileObj, "profileObj");
+      console.log(profileObj.length, "profileObj.length");
+      if (!profileObj || profileObj.length == 0) {
         const profile = new Profile(inputs);
         profile.save();
         response.data = profile;
         response.message = "created successfully";
       } else {
-        console.log(inputs,'inputs')
+        console.log(inputs, "inputs");
         const profile = await Profile.findOneAndUpdate(
           { wallet: inputs.wallet },
           {
@@ -214,7 +214,7 @@ export const createUpdateProfile = async (req, res) => {
           },
           { new: true }
         );
-        console.log(profile,'profile')
+        console.log(profile, "profile");
         response.data = profile;
         response.message = "update successfully";
       }
@@ -224,7 +224,7 @@ export const createUpdateProfile = async (req, res) => {
       return res.status(400).send(err.message);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).send({ error });
   }
 };
