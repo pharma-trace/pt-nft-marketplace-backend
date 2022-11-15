@@ -22,7 +22,7 @@ const profileSchema = new Schema(
     image: {
       type: String,
     },
-    bannerColor: {
+    bannerColor: { type: String },
     banner: {
       type: String,
     },
