@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  auctionNFT,
   createNFT,
   unListedNFT,
   listedNFT,
@@ -26,6 +27,8 @@ import {
 } from "../controllers/nft";
 
 const router = express.Router();
+
+router.post("/auction-nft", auctionNFT);
 router.post("/create-nft", createNFT);
 router.post("/listing-nft", listedNFT);
 router.post("/unlisting-nft", unListedNFT);
