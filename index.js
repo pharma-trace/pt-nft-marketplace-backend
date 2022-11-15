@@ -11,7 +11,7 @@ const app = express();
 
 var whitelist = [
   "http://localhost:3000",
-  "https://pt-nft-market-place-frontend-v1.vercel.app/",
+  "https://pt-nft-market-place-frontend-v1.vercel.app",
 ];
 var corsOptions = {
   origin: function (origin, callback) {
