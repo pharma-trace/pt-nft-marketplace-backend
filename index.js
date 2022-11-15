@@ -22,11 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://pt-nft-market-place-frontend-v1.vercel.app/",
   })
 );
-app.use(express.static('public'));
-    
+app.use(express.static("public"));
+
 readdirSync("./routes").map((r) => app.use("/api", require(`./routes/${r}`)));
 
 const port = process.env.PORT || 8000;

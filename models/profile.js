@@ -15,13 +15,14 @@ const profileSchema = new Schema(
       //   required: true,
       // unique: true,
     },
+    colorCode: {
+      type: String,
+    },
     about: {},
     image: {
       type: String,
     },
-    colorCode: {
-      type: String,
-    },
+    bannerColor: {
     banner: {
       type: String,
     },
@@ -47,6 +48,10 @@ const profileSchema = new Schema(
       type: String,
     },
     isColour: {
+      type: Boolean,
+      required: true,
+    },
+    isBannerColour: {
       type: Boolean,
       required: true,
     },
