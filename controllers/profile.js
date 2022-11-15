@@ -18,6 +18,8 @@ export const profile = async (req, res) => {
     instagramURL,
     tiktokURL,
     youtubeURL,
+    bannerColor,
+    isBannerColour,
     wallet,
   } = req.body;
   //   if (!name.length && !email.length) {
@@ -41,6 +43,8 @@ export const profile = async (req, res) => {
       instagramURL,
       tiktokURL,
       youtubeURL,
+      bannerColor,
+      isBannerColour,
       wallet,
     });
     profile.save();
@@ -74,6 +78,8 @@ export const updateProfile = async (req, res) => {
     colorCode,
     instagramURL,
     tiktokURL,
+    bannerColor,
+    isBannerColour,
     youtubeURL,
     wallet,
   } = req.body;
@@ -99,7 +105,9 @@ export const updateProfile = async (req, res) => {
         twitterURL: twitterURL,
         instagramURL: instagramURL,
         tiktokURL: tiktokURL,
-        colorCode:colorCode,
+        colorCode: colorCode,
+        bannerColor: bannerColor,
+        isBannerColour: isBannerColour,
         youtubeURL: youtubeURL,
       },
       { new: true }
@@ -196,6 +204,8 @@ export const createUpdateProfile = async (req, res) => {
         instagramURL: data.instagramURL,
         tiktokURL: data.tiktokURL,
         youtubeURL: data.youtubeURL,
+        bannerColor: data.bannerColor,
+        isBannerColour: data.isBannerColour,
         wallet: data.wallet,
       };
       console.log(profileObj, "profileObj");
